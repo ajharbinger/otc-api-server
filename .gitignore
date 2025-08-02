@@ -37,3 +37,7 @@ Thumbs.db
 
 # Dependencies
 vendor/
+
+# Deploy keys
+deploy_key
+deploy_key.pub
