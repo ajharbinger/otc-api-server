@@ -11,6 +11,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/ajharbinger/otc-oxy2-pipeline/internal/database"
 	"github.com/ajharbinger/otc-oxy2-pipeline/internal/models"
+	"github.com/ajharbinger/otc-oxy2-pipeline/internal/repository"
 	"github.com/ajharbinger/otc-oxy2-pipeline/internal/services"
 	"github.com/ajharbinger/otc-oxy2-pipeline/pkg/config"
 )
@@ -21,7 +22,7 @@ type Service struct {
 	scraper        *Scraper
 	transformer    *Transformer
 	cfg            *config.Config
-	scoringService *services.ScoringService
+	scoringService services.ScoringService
 }
 
 // NewService creates a new scraping service with OxyLabs support
@@ -32,7 +33,8 @@ func NewService(db *database.DB, cfg *config.Config, maxConcurrency int) (*Servi
 	}
 
 	// Initialize scoring service for automatic scoring
-	scoringService := services.NewScoringService(db.DB)
+	repos := repository.NewRepositories(db.DB)
+	scoringService := services.NewScoringService(repos)
 
 	return &Service{
 		db:             db,
@@ -542,7 +544,7 @@ func (s *Service) scoreCompanyAfterScrape(ctx context.Context, companyID string)
 	log.Printf("Starting automatic scoring for company ID: %s", companyID)
 	
 	// Create context with timeout for scoring operation
-	scoreCtx, cancel := context.WithTimeout(ctx, 30*time.Second)
+	_, cancel := context.WithTimeout(ctx, 30*time.Second)
 	defer cancel()
 	
 	// Score the company using the scoring service

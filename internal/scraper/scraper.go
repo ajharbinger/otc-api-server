@@ -210,7 +210,7 @@ func (s *Scraper) processBatch(ctx context.Context, tickers []string, resultsCha
 	docs, errors := s.client.GetBatch(ctx, allURLs)
 
 	// Process results for each ticker
-	for i, ticker := range tickers {
+	for _, ticker := range tickers {
 		scraped := &models.ScrapedData{
 			Ticker:     ticker,
 			ScrapedAt:  time.Now(),

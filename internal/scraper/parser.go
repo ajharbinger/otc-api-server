@@ -8,7 +8,6 @@ import (
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/ajharbinger/otc-oxy2-pipeline/internal/models"
 )
 
 // Parser handles parsing of OTC Markets pages

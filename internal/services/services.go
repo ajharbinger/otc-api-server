@@ -61,3 +61,8 @@ func NewServices(db *sql.DB, cfg *config.Config) *Services {
 		Auth:    newAuthService(repos, cfg),
 	}
 }
+
+// NewScoringService creates a standalone scoring service
+func NewScoringService(repos *repository.Repositories) ScoringService {
+	return newScoringService(repos)
+}

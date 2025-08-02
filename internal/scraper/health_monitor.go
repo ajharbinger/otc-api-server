@@ -1,7 +1,6 @@
 package scraper
 
 import (
-	"context"
 	"strings"
 	"sync"
 	"time"
