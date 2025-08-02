@@ -4,10 +4,13 @@ RUN apk add --no-cache git ca-certificates gcc musl-dev
 
 WORKDIR /build
 
-COPY go.mod go.sum ./
-RUN go mod download
+COPY go.mod ./
+COPY go.su[m] ./
 
 COPY . .
+
+# Generate go.sum based on actual imports
+RUN go mod tidy
 
 RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o api-server ./cmd/server
 
