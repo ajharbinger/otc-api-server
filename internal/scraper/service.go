@@ -557,7 +557,7 @@ func (s *Service) scoreCompanyAfterScrape(ctx context.Context, companyID string)
 }
 
 // GetScoringService returns the scoring service instance for external use
-func (s *Service) GetScoringService() *services.ScoringService {
+func (s *Service) GetScoringService() services.ScoringService {
 	return s.scoringService
 }
 
